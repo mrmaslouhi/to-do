@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="stylesheet" href="src/style.scss">
+</head>
+
+<body>
+  <header>
+    <h1>TO DO</h1>
+  </header>
+  <main>
+    <section>
+      <div class="tasks-container">
+        <div style="display: flex">
+          <input placeholder="Add new task..." type="text">
+          <button type="button" onclick="showDialog()">Add task</button>
+        </div>
+        <div hidden class="no-tasks-container">
+          <p>No tasks available.</p>
+          <p>To add a task, click on the "Add task" button.</p>
+        </div>
+      </div>
+      <!-- <div class="tasks-sort-container"></div> -->
+    </section>
+  </main>
+  <footer>
+    <small>to do app / mrmaslouhi / all rights reserved</small>
+  </footer>
+  <dialog>
+    <form>
+      <button type="button" onclick="closeDialog()">X</button>
+      <p>Dialog title</p>
+      <p>Dialog description</p>
+      <label for="task-input">Task</label>
+      <input autofocus type="text" id="task-input" required />
+      <label for="task-priority">Task priority</label>
+      <select name="priority" id="task-priority" required>
+        <option value="high">High</option>
+        <option value="medium">Medium</option>
+        <option value="low">Low</option>
+      </select>
+      <button type="submit">Add task</button>
+      <button formmethod="dialog" type="submit">Cancel</button>
+    </form>
+  </dialog>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  <script src="./src/main.js"></script>
+</body>
+
+</html>
