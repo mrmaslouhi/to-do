@@ -1,0 +1,15 @@
+.task-container {
+    border-radius: 6px;
+    margin-bottom: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+input[type="text"] {
+    width: 100%;
+}
+
+.button {
+    width: 100%;
+}
