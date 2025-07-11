@@ -2,10 +2,6 @@
 const taskInputElement = document.querySelector('#task-input');
 const tasksContainerElement = document.querySelector('.tasks-container');
 const noTasksContainerElement = document.querySelector('.no-tasks-container');
-const dialog = document.querySelector('dialog');
-const taskPrioritySelectElement = document.querySelector('#task-priority');
-const dialogFormElement = document.querySelector('form');
-const tableElement = document.querySelector('table');
 
 // Modifiying localStorage to simulate storing objects as values
 Storage.prototype.setObj = function (key, obj) {
@@ -29,11 +25,13 @@ if (tasks.length === 0) {
 }
 
 // Utility function for inserting newly added tasks inside the tasks container
-const insertTask = function insertTaskInsideTasksDiv(newTask) {
+const insertTask = function insertTaskInsideTasksDiv(task) {
   const taskHTML = `
-        <div style="border: 2px solid blue" class="task-container">
+        <div class="task-container notice">
+        <div style="display: flex; align-items: center">
           <input type="checkbox" onchange="checkTask()" /> 
-          <p class="task">${newTask.task}</p>
+          <p class="task">${task}</p>      
+        </div>
           <button class="delete-button" onclick="deleteTask()">Remove</button>
         </div>
       `;
@@ -45,7 +43,7 @@ const deleteTask = function deleteOneTask() {
   const singleTaskContainer = document.querySelector('.task-container');
   const taskToBeRemovedText = document.querySelector('.task').innerHTML;
   for (let i = 0; i < tasks.length; i++) {
-    if (tasks[i].task === taskToBeRemovedText) {
+    if (tasks[i]=== taskToBeRemovedText) {
       tasks.splice(i, 1);
     }
   }
@@ -62,17 +60,10 @@ const deleteTask = function deleteOneTask() {
 // Marking tasks as checked
 const checkTask = function checkCompletedTask() {
   const taskElement = document.querySelector('.task');
-  const selectElementValue =
-    taskPrioritySelectElement.options[taskPrioritySelectElement.selectedIndex];
   if (taskElement.style.textDecoration === 'line-through') {
     taskElement.style.textDecoration = 'none';
   } else {
     taskElement.style.textDecoration = 'line-through';
-  }
-  if (selectElementValue.style.textDecoration === 'none') {
-    selectElementValue.style.textDecoration = 'nonline-through';
-  } else {
-    selectElementValue.style.textDecoration = 'none';
   }
 };
 
@@ -82,43 +73,19 @@ const populate = function insertTasksInsideTasksDiv() {
   tasks.forEach((task) => insertTask(task));
 };
 
-// Modal dialog functions
-const closeDialog = () => dialog.close();
-const showDialog = () => dialog.showModal();
-
-// Clicking outsite the dialog closes off the dialog element
-dialog.addEventListener('click', (e) => {
-  const dialogDimensions = dialog.getBoundingClientRect();
-  if (
-    e.clientX < dialogDimensions.left ||
-    e.clientX > dialogDimensions.right ||
-    e.clientY < dialogDimensions.top ||
-    e.clientY > dialogDimensions.bottom
-  ) {
-    dialog.close();
-  }
-});
-
-// Populating the tasks container using this function
-populate();
-
 // Adding a task
-dialogFormElement.addEventListener('submit', (event) => {
-  event.preventDefault();
+
+const addTask = function addTaskAndSaveIt() {
   if (tasks.length === 0) {
     noTasksContainerElement.setAttribute('hidden', 'hidden');
   }
   const taskText = taskInputElement.value;
-  const selectElementValue =
-    taskPrioritySelectElement.options[taskPrioritySelectElement.selectedIndex]
-      .text;
-  const newTask = {
-    task: taskText,
-    priority: selectElementValue,
-  };
-
-  tasks.push(newTask);
+  tasks.push(taskText);
   localStorage.setObj('tasks', tasks);
   taskInputElement.value = '';
-  insertTask(newTask);
-});
+  insertTask(taskText);
+}
+
+// Populating the tasks container using this function
+populate();
+
